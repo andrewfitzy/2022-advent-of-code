@@ -1,0 +1,14 @@
+repos:
+    # ==========================================================================
+    # Golang Pre-Commit Hooks | https://github.com/tekwizely/pre-commit-golang
+    #
+    # Visit the project home page to learn more about the available Hooks,
+    # including useful arguments you might want to pass into them.
+    #
+    # ==========================================================================
+-   repo: https://github.com/tekwizely/pre-commit-golang
+    rev: v1.0.0-rc.1
+    hooks:
+    -   id: go-mod-tidy
+    -   id: go-fmt
+        args: [ -w, -s, -d=false ]
