@@ -2,34 +2,8 @@ package day_01
 
 import "bufio"
 import "strings"
-import "strconv"
 
-func calculateElfValue(input []string) int {
-	total := 0
-	for _, strValue := range input {
-		intValue, err := strconv.Atoi(strValue)
-		if err != nil {
-			panic(err)
-		}
-		total = total + intValue
-	}
-	return total
-}
-
-func findGreatestElfValue(input []elf) elf {
-	tmpElf := elf{
-		index:    0,
-		calories: 0,
-	}
-	for index, element := range input {
-		if element.calories > tmpElf.calories {
-			tmpElf = input[index]
-		}
-	}
-	return tmpElf
-}
-
-func solve(input string) elf {
+func solve01(input string) elf {
 	elves := []elf{}
 
 	elfCount := 0
@@ -61,9 +35,7 @@ func solve(input string) elf {
 		elves = append(elves, temp_elf)
 	}
 
-	// iterate through the elves and find the best elf, extract int a map
 	bestElf := findGreatestElfValue(elves)
 
-	// return the best elf
 	return bestElf
 }
