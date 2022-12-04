@@ -39,7 +39,7 @@ func getCommonElfItem(input1 string, input2 string, input3 string) rune {
 func solve02(input string) int {
 	total := 0
 	scanner := bufio.NewScanner(strings.NewReader(input))
-	for true {
+	for {
 		item1 := ""
 		item2 := ""
 		item3 := ""
