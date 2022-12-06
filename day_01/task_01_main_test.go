@@ -1,9 +1,10 @@
 package day_01
 
 import "testing"
+import "github.com/andrewfitzy/2022-advent-of-code/util"
 
 func Test_solve01_with_input_01(t *testing.T) {
-	input := get_file_content("task_01_input_01.txt")
+	input := util.GetFileContent("task_01_input_01.txt")
 
 	want := elf{
 		index:    3,
@@ -18,7 +19,7 @@ func Test_solve01_with_input_01(t *testing.T) {
 }
 
 func Test_solve01_with_input_02(t *testing.T) {
-	input := get_file_content("task_01_input_02.txt")
+	input := util.GetFileContent("task_01_input_02.txt")
 
 	want := elf{
 		index:    28,

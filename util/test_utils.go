@@ -1,8 +1,8 @@
-package day_02
+package util
 
 import "os"
 
-func get_file_content(filename string) string {
+func GetFileContent(filename string) string {
 	data, err := os.ReadFile(filename)
 	if err != nil {
 		panic(err)

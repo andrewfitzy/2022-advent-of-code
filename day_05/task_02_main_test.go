@@ -1,6 +1,7 @@
 package day_05
 
 import "testing"
+import "github.com/andrewfitzy/2022-advent-of-code/util"
 
 func Test_solve02_with_input_01(t *testing.T) {
 	/*
@@ -9,7 +10,7 @@ func Test_solve02_with_input_01(t *testing.T) {
 	   [Z] [M] [P]
 	    1   2   3
 	*/
-	input := get_file_content("task_01_input_01.txt")
+	input := util.GetFileContent("task_01_input_01.txt")
 
 	startPosition := map[int]string{
 		1: "ZN",
@@ -39,7 +40,7 @@ func Test_solve02_with_input_02(t *testing.T) {
 	    1   2   3   4   5   6   7   8   9
 	*/
 
-	input := get_file_content("task_01_input_02.txt")
+	input := util.GetFileContent("task_01_input_02.txt")
 	startPosition := map[int]string{
 		1: "HCR",
 		2: "BJHLSF",
