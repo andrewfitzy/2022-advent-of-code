@@ -15,14 +15,14 @@ func Test_solve02_with_input_01(t *testing.T) {
 	}
 }
 
-func Test_solve02_with_input_02(t *testing.T) {
-	input := util.GetFileContent("task_01_input_02.txt")
+// func Test_solve02_with_input_02(t *testing.T) {
+// 	input := util.GetFileContent("task_01_input_02.txt")
 
-	want := 942298
+// 	want := 0
 
-	got := solve02(input)
+// 	got := solve02(input)
 
-	if want != got {
-		t.Errorf("solve02() = %v, want %v", got, want)
-	}
-}
+// 	if want != got {
+// 		t.Errorf("solve02() = %v, want %v", got, want)
+// 	}
+// }
