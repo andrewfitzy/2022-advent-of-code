@@ -24,8 +24,22 @@ func GetMonkeyBusiness(monkeys map[int]int) int {
 	return monkeyBusiness
 }
 
-func MonkeyInspection(worryLevel int, testDivisor int, passMonkey int, failMonkey int) result {
+func MonkeyInspectionTask01(worryLevel int, testDivisor int, passMonkey int, failMonkey int) result {
 	reducedWorry := worryLevel / 3
+	if reducedWorry%testDivisor == 0 {
+		return result{
+			nextMonkey: passMonkey,
+			worryLevel: reducedWorry,
+		}
+	}
+	return result{
+		nextMonkey: failMonkey,
+		worryLevel: reducedWorry,
+	}
+}
+
+func MonkeyInspectionTask02(worryLevel int, worryLimit int, testDivisor int, passMonkey int, failMonkey int) result {
+	reducedWorry := worryLevel % worryLimit
 	if reducedWorry%testDivisor == 0 {
 		return result{
 			nextMonkey: passMonkey,
