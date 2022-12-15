@@ -69,16 +69,16 @@ func solve01(input string) int {
 		spaces, _ := strconv.Atoi(entry[1])
 		for i := 0; i < spaces; i++ {
 			// move head in the direction it needs to move one space at a time
-			if "U" == direction {
+			if direction == "U" {
 				headLocationRow--
 			}
-			if "D" == direction {
+			if direction == "D" {
 				headLocationRow++
 			}
-			if "L" == direction {
+			if direction == "L" {
 				headLocationCol--
 			}
-			if "R" == direction {
+			if direction == "R" {
 				headLocationCol++
 			}
 
