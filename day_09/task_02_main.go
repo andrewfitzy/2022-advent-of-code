@@ -55,48 +55,12 @@ func nextIsAdjacentToCurrent(headLocationCol int, headLocationRow int, tailLocat
 	return false
 }
 
-func printVisited(visited []point) {
-	for _, coord := range visited {
-		fmt.Println(coord)
-	}
-}
-
-func printVisitedSet(visited *hashset.Set) {
-	visitedParts := visited.Values()
-	for i := 0; i < len(visitedParts); i++ { // add file size to all entries that make up part of the path
-		fmt.Println(visitedParts)
-	}
-}
-
-func printSpace(rope []point) {
-	space := make([][]rune, 20)
-	for i := range space {
-		row := make([]rune, 20)
-		for j := range row {
-			row[j] = '.'
-		}
-		space[i] = row
-	}
-
-	for index, point := range rope {
-		space[point.row][point.col] = rune(index)
-	}
-
-	for i := 0; i < len(space); i++ {
-		for j := 0; j < len(space[i]); j++ {
-			fmt.Printf("%c", space[i][j])
-
-		}
-		fmt.Print("\n")
-	}
-}
-
 func solve02(input string) int {
 	// choose a starting position
 	headLocationCol := 0
 	headLocationRow := 0
 
-	rope := make([]point, 10, 10)
+	rope := make([]point, 10)
 	for i := 0; i < len(rope); i++ {
 		rope[i] = point{
 			col: headLocationCol,
