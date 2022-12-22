@@ -1,58 +1,42 @@
-### Day 20: Grove Positioning System
-It's finally time to meet back up with the Elves. When you try to contact them, however, you get no reply. Perhaps you're out of range?
+### Day 21: Monkey Math
+The monkeys are back! You're worried they're going to try to steal your stuff again, but it seems like they're just holding their ground and making various monkey noises at you.
 
-You know they're headed to the grove where the star fruit grows, so if you can figure out where that is, you should be able to meet back up with them.
+Eventually, one of the elephants realizes you don't speak monkey and comes over to interpret. As it turns out, they overheard you talking about trying to find the grove; they can show you a shortcut if you answer their riddle.
 
-Fortunately, your handheld device has a file (your puzzle input) that contains the grove's coordinates! Unfortunately, the file is encrypted - just in case the device were to fall into the wrong hands.
+Each monkey is given a job: either to yell a specific number or to yell the result of a math operation. All of the number-yelling monkeys know their number from the start; however, the math operation monkeys need to wait for two other monkeys to yell a number, and those two other monkeys might also be waiting on other monkeys.
 
-Maybe you can decrypt it?
+Your job is to work out the number the monkey named root will yell before the monkeys figure it out themselves.
 
-When you were still back at the camp, you overheard some Elves talking about coordinate file encryption. The main operation involved in decrypting the file is called mixing.
-
-The encrypted file is a list of numbers. To mix the file, move each number forward or backward in the file a number of positions equal to the value of the number being moved. The list is circular, so moving a number off one end of the list wraps back around to the other end as if the ends were connected.
-
-For example, to move the 1 in a sequence like 4, 5, 6, 1, 7, 8, 9, the 1 moves one position forward: 4, 5, 6, 7, 1, 8, 9. To move the -2 in a sequence like 4, -2, 5, 6, 7, 8, 9, the -2 moves two positions backward, wrapping around: 4, 5, 6, 7, 8, -2, 9.
-
-The numbers should be moved in the order they originally appear in the encrypted file. Numbers moving around during the mixing process do not change the order in which the numbers are moved.
-
-Consider this encrypted file:
+For example:
 ```
-1
-2
--3
-3
--2
-0
-4
-```
-
-Mixing this file proceeds as follows:
-```
-Initial arrangement:
-1, 2, -3, 3, -2, 0, 4
-
-1 moves between 2 and -3:
-2, 1, -3, 3, -2, 0, 4
-
-2 moves between -3 and 3:
-1, -3, 2, 3, -2, 0, 4
-
--3 moves between -2 and 0:
-1, 2, 3, -2, -3, 0, 4
-
-3 moves between 0 and 4:
-1, 2, -2, -3, 0, 3, 4
-
--2 moves between 4 and 1:
-1, 2, -3, 0, 3, 4, -2
-
-0 does not move:
-1, 2, -3, 0, 3, 4, -2
-
-4 moves between -3 and 0:
-1, 2, -3, 4, 0, 3, -2
+root: pppw + sjmn
+dbpl: 5
+cczh: sllz + lgvd
+zczc: 2
+ptdq: humn - dvpt
+dvpt: 3
+lfqf: 4
+humn: 5
+ljgn: 2
+sjmn: drzm * dbpl
+sllz: 4
+pppw: cczh / lfqf
+lgvd: ljgn * ptdq
+drzm: hmdt - zczc
+hmdt: 32
 ```
 
-Then, the grove coordinates can be found by looking at the 1000th, 2000th, and 3000th numbers after the value 0, wrapping around the list as necessary. In the above example, the 1000th number after 0 is 4, the 2000th is -3, and the 3000th is 2; adding these together produces 3.
+Each line contains the name of a monkey, a colon, and then the job of that monkey:
+- A lone number means the monkey's job is simply to yell that number.
+- A job like aaaa + bbbb means the monkey waits for monkeys aaaa and bbbb to yell each of their numbers; the monkey then yells the sum of those two numbers.
+- aaaa - bbbb means the monkey yells aaaa's number minus bbbb's number.
+- Job aaaa * bbbb will yell aaaa's number multiplied by bbbb's number.
+- Job aaaa / bbbb will yell aaaa's number divided by bbbb's number.
 
-Mix your encrypted file exactly once. What is the sum of the three numbers that form the grove coordinates?
+So, in the above example, monkey drzm has to wait for monkeys hmdt and zczc to yell their numbers. Fortunately, both hmdt and zczc have jobs that involve simply yelling a single number, so they do this immediately: 32 and 2. Monkey drzm can then yell its number by finding 32 minus 2: 30.
+
+Then, monkey sjmn has one of its numbers (30, from monkey drzm), and already has its other number, 5, from dbpl. This allows it to yell its own number by finding 30 multiplied by 5: 150.
+
+This process continues until root yells a number: 152.
+
+However, your actual situation involves considerably more monkeys. What number will the monkey named root yell?
