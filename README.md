@@ -5,29 +5,25 @@
 This repo contains the solutions for my path of [Advent of Code 2022](https://adventofcode.com/2022). I complete AoC to get familiar with a technology, its build tools and testing tools, it's kind of a mini-production type workflow I follow.
 
 In this year I chose to use the following tools:
-- [Kotlin v1.9.20](https://kotlinlang.org/docs/whatsnew1920.html). Language for this years AOC.
-- [Gradle v8.1.1](https://docs.gradle.org/8.1.1/release-notes.html). Build tool for Kotlin projects.
-- [Spotless v6.25.0](https://github.com/diffplug/spotless/releases/tag/gradle%2F6.25.0). Also using the Ktlint formatting configuration [v1.1.1](https://github.com/pinterest/ktlint/releases/tag/1.1.1).
-- [Detekt v1.23.3](https://detekt.dev/docs/intro). Code analysis tool which is useful for finding bugs.
-- [Kotlin JUnit](https://kotlinlang.org/api/latest/kotlin.test/). Unit test framework with a Kotlin flavour.
+- [Go v1.19](https://go.dev/doc/devel/release#go1.19) - Programming language for this years solutions
 
-All development was completed using IntelliJ which is an awesome development environment.
+All development was completed using [Visual Studio Code](https://code.visualstudio.com) which is an ok text editor.
 
 ## Setup
-There is a small setup script that copies the projects pre-commit file to the `hooks` folder of the project's repo. This needs to be run after the project is cloned only. 
+After cloning the repo, perform the setup operations:
 ```bash
-$ ./gradlew initProject  
+$ pre-commit install
 ```
 
 ## Testing
 To run the tests, `cd` into this directory and then do:
-```
+```bash
 $ go test -v ./...
 ```
 
 
 ## Committing
-The pre-commit hook should kick-in, when it does it will run `spotless` and `detekt`
+The pre-commit hook should kick-in, when it does it will run `go-mod-tidy` and `go-fmt`
 ```bash
 $ git add --all
 $ git commit -a
