@@ -7,6 +7,7 @@ This repo contains the solutions for my path of [Advent of Code 2022](https://ad
 In this year I chose to use the following tools:
 - [Go v1.19](https://go.dev/doc/devel/release#go1.19) - Programming language for this years solutions
 
+
 All development was completed using [Visual Studio Code](https://code.visualstudio.com) which is an ok text editor.
 
 ## Setup
