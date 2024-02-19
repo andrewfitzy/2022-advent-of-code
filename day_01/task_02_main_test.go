@@ -1,10 +1,24 @@
 package day_01
 
-import "testing"
-import "github.com/andrewfitzy/2022-advent-of-code/util"
+import (
+	"testing"
+)
 
-func Test_solve02_with_input_01(t *testing.T) {
-	input := util.GetFileContent("task_01_input_01.txt")
+func Test_solve02_with_demo_data_01(t *testing.T) {
+	input := "1000\n" +
+		"2000\n" +
+		"3000\n" +
+		"\n" +
+		"4000\n" +
+		"\n" +
+		"5000\n" +
+		"6000\n" +
+		"\n" +
+		"7000\n" +
+		"8000\n" +
+		"9000\n" +
+		"\n" +
+		"10000"
 
 	want := 45000
 
@@ -15,10 +29,10 @@ func Test_solve02_with_input_01(t *testing.T) {
 	}
 }
 
-// func Test_solve02_with_input_02(t *testing.T) {
-// 	input := util.GetFileContent("task_01_input_02.txt")
+// func Test_solve02_with_real_data_01(t *testing.T) {
+// 	input := util.GetFileContent("puzzle_input.txt")
 
-// 	want := 0
+// 	want := 209691
 
 // 	got := solve02(input)
 
