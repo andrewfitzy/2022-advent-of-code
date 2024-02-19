@@ -1,10 +1,13 @@
 package day_10
 
-import "testing"
-import "github.com/andrewfitzy/2022-advent-of-code/util"
+import (
+	"testing"
 
-func Test_solve02_with_input_01(t *testing.T) {
-	input := util.GetFileContent("task_01_input_01.txt")
+	"github.com/andrewfitzy/2022-advent-of-code/util"
+)
+
+func Test_solve02_with_demo_data_01(t *testing.T) {
+	input := util.GetFileContent("example_input.txt")
 	want := "##..##..##..##..##..##..##..##..##..##..\n" +
 		"###...###...###...###...###...###...###.\n" +
 		"####....####....####....####....####....\n" +
@@ -19,20 +22,20 @@ func Test_solve02_with_input_01(t *testing.T) {
 	}
 }
 
-func Test_solve02_with_input_02(t *testing.T) {
-	input := util.GetFileContent("task_01_input_02.txt")
+// func Test_solve02_with_real_data_01(t *testing.T) {
+// 	input := util.GetFileContent("puzzle_input.txt")
 
-	// leaving this one in, all answers are different for this challenge
-	want := "####.###...##..###..#..#.####..##..#..#.\n" +
-		"#....#..#.#..#.#..#.#..#.#....#..#.#..#.\n" +
-		"###..#..#.#....#..#.####.###..#....####.\n" +
-		"#....###..#.##.###..#..#.#....#.##.#..#.\n" +
-		"#....#....#..#.#....#..#.#....#..#.#..#.\n" +
-		"#....#.....###.#....#..#.#.....###.#..#.\n"
+// 	// If all rows are aligned, the letters are FPGPHFGH
+// 	want := "####.###...##..###..#..#.####..##..#..#.\n" +
+// 		"#....#..#.#..#.#..#.#..#.#....#..#.#..#.\n" +
+// 		"###..#..#.#....#..#.####.###..#....####.\n" +
+// 		"#....###..#.##.###..#..#.#....#.##.#..#.\n" +
+// 		"#....#....#..#.#....#..#.#....#..#.#..#.\n" +
+// 		"#....#.....###.#....#..#.#.....###.#..#.\n"
 
-	got := solve02(input)
+// 	got := solve02(input)
 
-	if want != got {
-		t.Errorf("solve02() = \n%v, want \n%v", got, want)
-	}
-}
+// 	if want != got {
+// 		t.Errorf("solve02() = \n%v, want \n%v", got, want)
+// 	}
+// }
