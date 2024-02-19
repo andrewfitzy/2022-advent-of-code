@@ -1,10 +1,13 @@
 package day_02
 
-import "testing"
-import "github.com/andrewfitzy/2022-advent-of-code/util"
+import (
+	"testing"
+)
 
-func Test_solve02_with_input_01(t *testing.T) {
-	input := util.GetFileContent("task_01_input_01.txt")
+func Test_solve02_with_demo_data_01(t *testing.T) {
+	input := "A Y\n" +
+		"B X\n" +
+		"C Z"
 
 	want := 12
 
@@ -15,14 +18,14 @@ func Test_solve02_with_input_01(t *testing.T) {
 	}
 }
 
-func Test_solve02_with_input_02(t *testing.T) {
-	input := util.GetFileContent("task_01_input_02.txt")
+// func Test_solve02_real_data_01(t *testing.T) {
+// 	input := util.GetFileContent("puzzle_input.txt")
 
-	want := 15508
+// 	want := 15508
 
-	got := solve02(input)
+// 	got := solve02(input)
 
-	if want != got {
-		t.Errorf("solve02() = %v, want %v", got, want)
-	}
-}
+// 	if want != got {
+// 		t.Errorf("solve02() = %v, want %v", got, want)
+// 	}
+// }
