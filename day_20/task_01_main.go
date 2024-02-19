@@ -1,9 +1,11 @@
-package day_12
+package day_20
 
-import "bufio"
-import "strings"
-import "fmt"
-import "strconv"
+import (
+	"bufio"
+	"fmt"
+	"strconv"
+	"strings"
+)
 
 // import "github.com/emirpasic/gods/sets/linkedhashset"
 
