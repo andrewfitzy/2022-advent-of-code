@@ -1,10 +1,14 @@
 package day_06
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/andrewfitzy/2022-advent-of-code/util"
+)
 
 // import "github.com/andrewfitzy/2022-advent-of-code/util"
 
-func Test_solve02_with_input_01(t *testing.T) {
+func Test_solve02_with_demo_data_01(t *testing.T) {
 
 	input := "mjqjpqmgbljsphdztnvjfqwrcgsmlb"
 
@@ -17,7 +21,7 @@ func Test_solve02_with_input_01(t *testing.T) {
 	}
 }
 
-func Test_solve02_with_input_02(t *testing.T) {
+func Test_solve02_with_demo_data_02(t *testing.T) {
 
 	input := "bvwbjplbgvbhsrlpgdmjqwftvncz"
 
@@ -30,7 +34,7 @@ func Test_solve02_with_input_02(t *testing.T) {
 	}
 }
 
-func Test_solve02_with_input_03(t *testing.T) {
+func Test_solve02_with_demo_data_03(t *testing.T) {
 	input := "nppdvjthqldpwncqszvftbrmjlhg"
 
 	want := 23
@@ -42,7 +46,7 @@ func Test_solve02_with_input_03(t *testing.T) {
 	}
 }
 
-func Test_solve02_with_input_04(t *testing.T) {
+func Test_solve02_with_demo_data_04(t *testing.T) {
 	input := "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg"
 
 	want := 29
@@ -54,7 +58,7 @@ func Test_solve02_with_input_04(t *testing.T) {
 	}
 }
 
-func Test_solve02_with_input_05(t *testing.T) {
+func Test_solve02_with_demo_data_05(t *testing.T) {
 	input := "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw"
 
 	want := 26
@@ -66,14 +70,14 @@ func Test_solve02_with_input_05(t *testing.T) {
 	}
 }
 
-// func Test_solve02_with_input_06(t *testing.T) {
-// 	input := util.GetFileContent("task_01_input_01.txt")
+func Test_solve02_with_real_data_01(t *testing.T) {
+	input := util.GetFileContent("puzzle_input.txt")
 
-// 	want := 0
+	want := 2508
 
-// 	got := solve02(input)
+	got := solve02(input)
 
-// 	if want != got {
-// 		t.Errorf("solve02() = %v, want %v", got, want)
-// 	}
-// }
+	if want != got {
+		t.Errorf("solve02() = %v, want %v", got, want)
+	}
+}
