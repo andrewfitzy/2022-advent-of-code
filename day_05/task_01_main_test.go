@@ -1,16 +1,21 @@
 package day_05
 
-import "testing"
-import "github.com/andrewfitzy/2022-advent-of-code/util"
+import (
+	"testing"
+)
 
-func Test_solve01_with_input_01(t *testing.T) {
+func Test_solve01_with_demo_data_01(t *testing.T) {
 	/*
 	       [D]
 	   [N] [C]
 	   [Z] [M] [P]
 	    1   2   3
 	*/
-	input := util.GetFileContent("task_01_input_01.txt")
+
+	input := "move 1 from 2 to 1\n" +
+		"move 3 from 1 to 3\n" +
+		"move 2 from 2 to 1\n" +
+		"move 1 from 1 to 2"
 
 	startPosition := map[int]string{
 		1: "ZN",
@@ -27,7 +32,7 @@ func Test_solve01_with_input_01(t *testing.T) {
 	}
 }
 
-// func Test_solve01_with_input_02(t *testing.T) {
+// func Test_solve01_with_real_data_01(t *testing.T) {
 // 	/*
 // 	                   [B]     [L]     [S]
 // 	           [Q] [J] [C]     [W]     [F]
@@ -40,7 +45,7 @@ func Test_solve01_with_input_01(t *testing.T) {
 // 	    1   2   3   4   5   6   7   8   9
 // 	*/
 
-// 	input := util.GetFileContent("task_01_input_02.txt")
+// 	input := util.GetFileContent("puzzle_input.txt")
 // 	startPosition := map[int]string{
 // 		1: "HCR",
 // 		2: "BJHLSF",
@@ -53,7 +58,7 @@ func Test_solve01_with_input_01(t *testing.T) {
 // 		9: "LDTRHPFS",
 // 	}
 
-// 	want := "AAAAAAAAA"
+// 	want := "SHQWSRBDL"
 
 // 	got := solve01(startPosition, input)
 
