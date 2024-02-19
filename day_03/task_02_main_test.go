@@ -1,10 +1,16 @@
 package day_03
 
-import "testing"
-import "github.com/andrewfitzy/2022-advent-of-code/util"
+import (
+	"testing"
+)
 
-func Test_solve02_with_input_01(t *testing.T) {
-	input := util.GetFileContent("task_01_input_01.txt")
+func Test_solve02_with_demo_data_01(t *testing.T) {
+	input := "vJrwpWtwJgWrhcsFMMfFFhFp\n" +
+		"jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL\n" +
+		"PmmdzqPrVvPwwTWBwg\n" +
+		"wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn\n" +
+		"ttgJtRGJQctTZtZT\n" +
+		"CrZsJsPPZsGzwwsLwLmpwMDw"
 
 	want := 70
 
@@ -15,10 +21,10 @@ func Test_solve02_with_input_01(t *testing.T) {
 	}
 }
 
-// func Test_solve02_with_input_02(t *testing.T) {
-// 	input := util.GetFileContent("task_01_input_02.txt")
+// func Test_solve02_with_real_data_01(t *testing.T) {
+// 	input := util.GetFileContent("puzzle_input.txt")
 
-// 	want := 0
+// 	want := 2738
 
 // 	got := solve02(input)
 
