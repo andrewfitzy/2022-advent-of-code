@@ -16,4 +16,4 @@
 .DS_Store
 
 # Ignore any of the puzzle input files
-# puzzle_input.txt
+puzzle_input.txt
