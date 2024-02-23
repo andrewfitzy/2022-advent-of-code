@@ -1,117 +1,25 @@
 package day_11
 
-func task01Monkey0(value int) result {
-	// Operation: new = old * 19
-	// Test: divisible by 7
-	//   If true: throw to monkey 2
-	//   If false: throw to monkey 3
-	worryLevel := value * 19
-	return MonkeyInspectionTask01(worryLevel, 7, 2, 3)
-}
-
-func task01Monkey1(value int) result {
-	// Operation: new = old + 1
-	// Test: divisible by 19
-	//   If true: throw to monkey 4
-	//   If false: throw to monkey 6
-	worryLevel := value + 1
-	return MonkeyInspectionTask01(worryLevel, 19, 4, 6)
-}
-
-func task01Monkey2(value int) result {
-	// Operation: new = old + 6
-	// Test: divisible by 5
-	//   If true: throw to monkey 7
-	//   If false: throw to monkey 5
-	worryLevel := value + 6
-	return MonkeyInspectionTask01(worryLevel, 5, 7, 5)
-}
-
-func task01Monkey3(value int) result {
-	// Operation: new = old + 5
-	// Test: divisible by 11
-	//   If true: throw to monkey 5
-	//   If false: throw to monkey 2
-	worryLevel := value + 5
-	return MonkeyInspectionTask01(worryLevel, 11, 5, 2)
-}
-
-func task01Monkey4(value int) result {
-	// 	Monkey 4:
-	// Operation: new = old * old
-	// Test: divisible by 17
-	//   If true: throw to monkey 0
-	//   If false: throw to monkey 3
-	worryLevel := value * value
-	return MonkeyInspectionTask01(worryLevel, 17, 0, 3)
-}
-
-func task01Monkey5(value int) result {
-	// Monkey 5:
-	// Operation: new = old + 7
-	// Test: divisible by 13
-	// If true: throw to monkey 1
-	// If false: throw to monkey 7
-	worryLevel := value + 7
-	return MonkeyInspectionTask01(worryLevel, 13, 1, 7)
-}
-
-func task01Monkey6(value int) result {
-	// Monkey 6:
-	// Operation: new = old * 7
-	// Test: divisible by 2
-	//   If true: throw to monkey 0
-	//   If false: throw to monkey 4
-	worryLevel := value * 7
-	return MonkeyInspectionTask01(worryLevel, 2, 0, 4)
-}
-
-func task01Monkey7(value int) result {
-	// Monkey 7:
-	// Operation: new = old + 2
-	// Test: divisible by 3
-	//   If true: throw to monkey 1
-	//   If false: throw to monkey 6
-	worryLevel := value + 2
-	return MonkeyInspectionTask01(worryLevel, 3, 1, 6)
-}
-
-func solve01(input string) int {
+func solve01(input string, iterations int) int {
 	monkeys := SetupMonkeys(input)
+
 	monkeyInspections := make(map[int]int)
-	for i := 0; i < 20; i++ {
+	for i := 0; i < iterations; i++ {
 		for j := 0; j < len(monkeys); j++ {
-			value, moreItems := monkeys[j].Dequeue()
+			monkey := monkeys[j]
+
+			value, moreItems := monkey.items.Dequeue()
 
 			for moreItems {
 				monkeyInspections[j] = monkeyInspections[j] + 1
-				if j == 0 {
-					result := task01Monkey0(value.(int))
-					monkeys[result.nextMonkey].Enqueue(result.worryLevel)
-				} else if j == 1 {
-					result := task01Monkey1(value.(int))
-					monkeys[result.nextMonkey].Enqueue(result.worryLevel)
-				} else if j == 2 {
-					result := task01Monkey2(value.(int))
-					monkeys[result.nextMonkey].Enqueue(result.worryLevel)
-				} else if j == 3 {
-					result := task01Monkey3(value.(int))
-					monkeys[result.nextMonkey].Enqueue(result.worryLevel)
-				} else if j == 4 {
-					result := task01Monkey4(value.(int))
-					monkeys[result.nextMonkey].Enqueue(result.worryLevel)
-				} else if j == 5 {
-					result := task01Monkey5(value.(int))
-					monkeys[result.nextMonkey].Enqueue(result.worryLevel)
-				} else if j == 6 {
-					result := task01Monkey6(value.(int))
-					monkeys[result.nextMonkey].Enqueue(result.worryLevel)
-				} else if j == 7 {
-					result := task01Monkey7(value.(int))
-					monkeys[result.nextMonkey].Enqueue(result.worryLevel)
-				}
 
-				value, moreItems = monkeys[j].Dequeue()
+				worryLevel := monkey.MonkeyPlay(value.(int))
+				result := monkey.MonkeyBored(worryLevel)
+
+				nextMonkey := monkeys[result.nextMonkey]
+				nextMonkey.items.Enqueue(result.worryLevel)
+
+				value, moreItems = monkey.items.Dequeue()
 			}
 		}
 	}
