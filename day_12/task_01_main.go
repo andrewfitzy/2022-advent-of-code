@@ -1,14 +1,23 @@
 package day_12
 
-import "bufio"
-import "strings"
-import "fmt"
-import "strconv"
-import "github.com/emirpasic/gods/sets/linkedhashset"
+import (
+	"bufio"
+	"fmt"
+	"strings"
+
+	"github.com/emirpasic/gods/queues/priorityqueue"
+	"github.com/emirpasic/gods/sets/hashset"
+)
 
 type point struct {
 	col int
 	row int
+}
+
+type entry struct {
+	location point
+	path     []point
+	cost     int
 }
 
 func getLocation(itemToFind string, space [][]string) point {
@@ -26,57 +35,113 @@ func getLocation(itemToFind string, space [][]string) point {
 }
 
 func isValidStep(location string, nextStep string) bool {
-	if location == "S" {
-		return true
+	// validate lengths as we'll use index access in a mo
+	if len(location) != 1 {
+		panic(fmt.Sprintf("Invalid content in location %v", location))
 	}
-	locationVal, _ := strconv.Atoi(location)
-	nextStepVal, _ := strconv.Atoi(nextStep)
-	if locationVal == nextStepVal || locationVal+1 == nextStepVal {
+
+	if len(nextStep) != 1 {
+		panic(fmt.Sprintf("Invalid content in nextStep %v", nextStep))
+	}
+
+	// From the start, assume S is at elevation a
+	var locationVal rune
+	if location == "S" {
+		locationVal = rune('a')
+	} else {
+		locationVal = rune(location[0])
+	}
+
+	// At the end, assume E is at elevation z
+	var nextStepVal rune
+	if nextStep == "E" {
+		nextStepVal = rune('z')
+	} else {
+		nextStepVal = rune(nextStep[0])
+	}
+
+	// check if we're going up 1 point of elevation, staying the same, or going down n steps
+	if locationVal+1 >= nextStepVal {
 		return true
 	}
 	return false
 }
 
-func getNextMoves(location point, existingMoves *linkedhashset.Set, landscape [][]string) *linkedhashset.Set {
-	//check if there is an L move
-	validMoves := linkedhashset.New()
-	if location.col-1 >= 0 {
-		leftPoint := point{
-			col: location.col - 1,
-			row: location.row,
-		}
-		if isValidStep(landscape[location.row][location.col], landscape[leftPoint.row][leftPoint.col]) && !existingMoves.Contains(leftPoint) {
-			validMoves.Add(leftPoint)
-		}
-	}
-	if location.col+1 <= len(landscape[0]) {
-		rightPoint := point{
-			col: location.col + 1,
-			row: location.row,
-		}
-		if isValidStep(landscape[location.row][location.col], landscape[rightPoint.row][rightPoint.col]) && !existingMoves.Contains(rightPoint) {
-			validMoves.Add(rightPoint)
-		}
-	}
-	if location.row-1 >= 0 {
-		upPoint := point{
-			col: location.col,
-			row: location.row - 1,
-		}
-		if isValidStep(landscape[location.row][location.col], landscape[upPoint.row][upPoint.col]) && !existingMoves.Contains(upPoint) {
-			validMoves.Add(upPoint)
-		}
-	}
-	if location.row+1 <= len(landscape) {
-		downPoint := point{
-			col: location.col,
-			row: location.row + 1,
-		}
-		if isValidStep(landscape[location.row][location.col], landscape[downPoint.row][downPoint.col]) && !existingMoves.Contains(downPoint) {
-			validMoves.Add(downPoint)
+func getNextMoves(location point, landscape [][]string) []point {
+	rows := len(landscape)
+	cols := len(landscape[0])
+
+	var validMoves []point
+
+	// Movement Deltas (Up, Down, Left, Right)
+	movements := [4][2]int{{0, -1}, {0, 1}, {-1, 0}, {1, 0}}
+
+	for i := 0; i < len(movements); i++ {
+		next_x := location.col + movements[i][0]
+		next_y := location.row + movements[i][1]
+		is_in_bounds := next_y >= 0 && next_y < rows && next_x >= 0 && next_x < cols
+		if is_in_bounds && isValidStep(landscape[location.row][location.col], landscape[next_y][next_x]) {
+			nextPoint := point{
+				col: next_x,
+				row: next_y,
+			}
+			validMoves = append(validMoves, nextPoint)
 		}
 	}
 	return validMoves
+}
+
+// Comparator function (sort by smallest number of spaces)
+func byCost(a, b interface{}) int {
+	priorityA := a.(entry).cost
+	priorityB := b.(entry).cost
+	if priorityA > priorityB {
+		return 1
+	} else if priorityA < priorityB {
+		return -1
+	} else {
+		return 0
+	}
+}
+
+func getShortestPath(start point, end point, space [][]string) []point {
+	queue := priorityqueue.NewWith(byCost)
+	visited := hashset.New()
+
+	first_step := entry{
+		location: start,
+		path:     []point{start},
+		cost:     1,
+	}
+	queue.Enqueue(first_step)
+
+	for !queue.Empty() {
+		currentState, _ := queue.Dequeue()
+		// First check that we haven't already been to the place
+		if visited.Contains(currentState.(entry).location) {
+			continue
+		}
+		visited.Add(currentState.(entry).location)
+
+		// Second check if we're at the end
+		if currentState.(entry).location == end {
+			return currentState.(entry).path
+		}
+
+		// Finally, add valid next locations
+		nextLocations := getNextMoves(currentState.(entry).location, space)
+		for _, val := range nextLocations {
+			newPath := append(currentState.(entry).path, val)
+			nextStep := entry{
+				location: val,
+				path:     newPath,
+				cost:     currentState.(entry).cost + 1,
+			}
+			queue.Enqueue(nextStep)
+		}
+	}
+
+	return []point{}
 }
 
 func solve01(input string) int {
@@ -87,52 +152,14 @@ func solve01(input string) int {
 		hills := strings.Split(line, "")
 		landscape = append(landscape, hills)
 	}
-	fmt.Println(landscape)
 
 	// first find S
 	sLocation := getLocation("S", landscape)
 	// then find E
 	eLocation := getLocation("E", landscape)
 
-	fmt.Println(sLocation)
-	fmt.Println(eLocation)
+	shortestPath := getShortestPath(sLocation, eLocation, landscape)
 
-	path := linkedhashset.New()
-	path.Add(sLocation)
-
-	startMoves := getNextMoves(sLocation, linkedhashset.New(), landscape)
-
-	movesIterator := startMoves.Iterator()
-	paths := make([]*linkedhashset.Set, 0)
-	for movesIterator.Next() {
-		// _, value := movesIterator.Index(), movesIterator.Value()
-		// tmpPaths := getPaths(value.(point), eLocation, path, landscape)
-		// for i := 0; i < len(tmpPaths);i++ {
-		// 	paths = append(paths,tmpPaths[i])
-		// }
-		fmt.Println(paths)
-	}
-
-	//recursive func, takes a current point, takes a board, a current path, returns a set of point
-
-	// get valid moves around current point
-	// for each valid move
-	// is the move E
-	// if it is return the current path
-	//if not and there are valid moves
-	// move to first in list
-	//if no valid moves, return empty
-
-	// do something like
-	// keep a stack of points or hashset of points or something
-	// from current position, find next that is lowest value, then next then next
-	// for each lowest put the co-ord in a hash set
-	//cant go to a square we've already been to, nemsh the set of visited?
-	// a move is one where current is >= next || current + 1 == next
-
-	// find the shortest non len()==0 path and this is the route.
-	//perf will be a killer :()
-
-	//hard coded for now, tests always pass :D
-	return 31
+	// return transitions not steps visited.
+	return len(shortestPath) - 1
 }
