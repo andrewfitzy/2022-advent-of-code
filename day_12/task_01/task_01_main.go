@@ -1,4 +1,4 @@
-package day_12
+package task_01
 
 import (
 	"bufio"

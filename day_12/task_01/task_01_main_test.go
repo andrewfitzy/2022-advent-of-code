@@ -1,4 +1,4 @@
-package day_12
+package task_01
 
 import (
 	"testing"
@@ -26,7 +26,7 @@ func Test_solve01_with_real_data_01(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping day_12.Test_solve01_with_real_data_01 in short mode.")
 	}
-	input := util.GetFileContent("puzzle_input.txt")
+	input := util.GetFileContent("../puzzle_input.txt")
 
 	want := 504
 
