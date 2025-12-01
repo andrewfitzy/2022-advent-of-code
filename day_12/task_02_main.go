@@ -1,73 +1,15 @@
-package task_02
+package day_12
 
 import (
 	"bufio"
-	"fmt"
 	"strings"
 
 	"github.com/emirpasic/gods/queues/priorityqueue"
 	"github.com/emirpasic/gods/sets/hashset"
 )
 
-type point struct {
-	col int
-	row int
-}
-
-type entry struct {
-	location point
-	path     []point
-	cost     int
-}
-
-func getLocation(itemToFind string, space [][]string) point {
-	for i := 0; i < len(space); i++ {
-		for j := 0; j < len(space[i]); j++ {
-			if space[i][j] == itemToFind {
-				return point{
-					col: j,
-					row: i,
-				}
-			}
-		}
-	}
-	panic(fmt.Sprintf("Cannot find %v", itemToFind))
-}
-
-func isValidStep(location string, nextStep string) bool {
-	// validate lengths as we'll use index access in a mo
-	if len(location) != 1 {
-		panic(fmt.Sprintf("Invalid content in location %v", location))
-	}
-
-	if len(nextStep) != 1 {
-		panic(fmt.Sprintf("Invalid content in nextStep %v", nextStep))
-	}
-
-	// From the start, assume S is at elevation a
-	var locationVal rune
-	if location == "S" {
-		locationVal = rune('a')
-	} else {
-		locationVal = rune(location[0])
-	}
-
-	// At the end, assume E is at elevation z
-	var nextStepVal rune
-	if nextStep == "E" {
-		nextStepVal = rune('z')
-	} else {
-		nextStepVal = rune(nextStep[0])
-	}
-
-	// check if we're going up 1 point of elevation, staying the same, or going down n steps
-	if locationVal+1 >= nextStepVal {
-		return true
-	}
-	return false
-}
-
-func getNextMoves(location point, landscape [][]string) []point {
+// this assumes we're going from start to finish so we pass next to currenct in isValidStep
+func getNextMovesBackwards(location point, landscape [][]string) []point {
 	rows := len(landscape)
 	cols := len(landscape[0])
 
@@ -93,20 +35,7 @@ func getNextMoves(location point, landscape [][]string) []point {
 	return validMoves
 }
 
-// Comparator function (sort by smallest number of spaces)
-func byCost(a, b interface{}) int {
-	priorityA := a.(entry).cost
-	priorityB := b.(entry).cost
-	if priorityA > priorityB {
-		return 1
-	} else if priorityA < priorityB {
-		return -1
-	} else {
-		return 0
-	}
-}
-
-func getShortestPath(start point, space [][]string) []point {
+func getShortestPathToAFromEnd(start point, space [][]string) []point {
 	queue := priorityqueue.NewWith(byCost)
 	visited := hashset.New()
 
@@ -131,7 +60,7 @@ func getShortestPath(start point, space [][]string) []point {
 		}
 
 		// Finally, add valid next locations
-		nextLocations := getNextMoves(currentState.(entry).location, space)
+		nextLocations := getNextMovesBackwards(currentState.(entry).location, space)
 		for _, val := range nextLocations {
 			newPath := append(currentState.(entry).path, val)
 			nextStep := entry{
@@ -158,7 +87,7 @@ func solve02(input string) int {
 	// first find E
 	eLocation := getLocation("E", landscape)
 
-	shortestPath := getShortestPath(eLocation, landscape)
+	shortestPath := getShortestPathToAFromEnd(eLocation, landscape)
 
 	// return transitions not steps visited.
 	return len(shortestPath) - 1
